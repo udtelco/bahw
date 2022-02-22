@@ -3,6 +3,7 @@ BA HomeWork Application
 Requirements :
 1. Recent Docker
 2. minikube
+3. docker images : ruby:2.6.3, perl:latest
 
 Test Requirements :
  (Application is tested in local mode, hence all the requirements of application server apply here)
