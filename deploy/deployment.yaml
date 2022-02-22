@@ -1,0 +1,21 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: bahw-app
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+        app.kubernetes.io/name: bahw-app
+  template:
+    metadata:
+      labels:
+        app: bahw-app
+        app.kubernetes.io/name: bahw-app
+    spec:
+      containers:
+        - name: bahw-app
+          image: theunixmaster/bahw-app:1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8567
