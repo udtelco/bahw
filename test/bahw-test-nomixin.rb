@@ -6,14 +6,14 @@ require 'rack/test'
 
 class BAHWTest < Test::Unit::TestCase
 
-  def test_it_transforms
+  def test_it_transforms_nomixin
     browser = Rack::Test::Session.new(Rack::MockSession.new(Sinatra::Application))
     browser.get '/' , :transform=>'aaa-BBB-cCc-dDD'
     assert browser.last_response.ok?
     assert_equal 'aaaBbbCccDdd', browser.last_response.body
   end
 
-  def test_it_doesnt_break_from_numbers
+  def test_it_doesnt_break_from_numbers_nomixin
     browser = Rack::Test::Session.new(Rack::MockSession.new(Sinatra::Application))
     browser.get '/' , :transform=>'12345'
     assert browser.last_response.body.include?('12345')

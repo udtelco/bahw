@@ -1,4 +1,30 @@
-docker build --tag bahw .
-kubectl create deployment bahw-dep-app --image=theunixmaster/bahw
-kubectl expose deployment bahw-dep-app --name=bahw-app-svc --type=LoadBalancer --port 8067 --target-port=4567
-minikube tunnel
+BA HomeWork Application
+
+Requirements :
+1. Recent Docker
+2. minikube
+
+Test Requirements :
+ (Application is tested in local mode, hence all the requirements of application server apply here)
+1. Ruby >=2.6.3
+2. gem, sinatra, test/unit, rack/test, rspec
+
+Clone repository into folder "bahw".
+Once there, following is the sequence of commands necessary to bring up BAHW on local k8s cluster
+bahw$ pwd
+~home/runme/bahw
+
+bahw$ docker build --tag theunixmaster/bahw-app:1.0.0 .
+bahw$ docker push theunixmaster/bahw-app:1.0.0
+bahw$ kubectl create -f deployment.yaml
+bahw$ kubectl create -f service.yaml
+
+Due to the nature of minukube network stack it is necessary to run minikube tunnel in the background
+ to enable LoadBalancer cluster node
+bahw$ minikube tunnel &
+ or
+bahw$ screen -S MK_TUNNEL minukube tunnel
+ type [Ctrl^A-D] to detach from screen
+
+ You can and should substitute "theunixmaster/bahw-app:1.0.0" for image tag appropriate for your Docker
+ installation in docker build and push commands as well as deploy/deployment.yaml configuration file for k8s.
