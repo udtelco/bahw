@@ -1,3 +1,3 @@
-require './hw.rb'
+require './code/hw.rb'
 
 run Sinatra::Application
