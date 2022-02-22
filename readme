@@ -1,0 +1,4 @@
+docker build --tag bahw .
+kubectl create deployment bahw-dep-app --image=theunixmaster/bahw
+kubectl expose deployment bahw-dep-app --name=bahw-app-svc --type=LoadBalancer --port 8067 --target-port=4567
+minikube tunnel

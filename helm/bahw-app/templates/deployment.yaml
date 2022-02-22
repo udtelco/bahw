@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "bahw-app.fullname" . }}
+  labels:
+     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+       app: {{ template "fullname" . }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+          - containerPort: {{ .Values.service.internalPort }}
+          livenessProbe:
+            httpGet:
+              path: /?transform=liv-ness-Probe
+              port: {{ .Values.service.externalPort }}
+          readinessProbe:
+            httpGet:
+              path: /?transform=rea-diness-Probe
+              port: {{ .Values.service.externalPort }}
+          resources: {{- toYaml .Values.resources | nindent 12 }}
+
+            httpGet:
+            path: /
+            port: {{ .Values.service.internalPort }}
+        initialDelaySeconds: 180 # In the future we need to wait for the database initialization
+        timeoutSeconds: 5
+        readinessProbe:
+        httpGet:
+            path: /
+            port: {{ .Values.service.internalPort }}
+        initialDelaySeconds: 60
+        timeoutSeconds: 5
