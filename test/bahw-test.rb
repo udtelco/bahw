@@ -6,6 +6,9 @@ require 'rack/test'
 
 class BAHWTest < Test::Unit::TestCase
 
+  def test_it_underCamelizes
+    assert_equal underCamelize('aaa-BBB-cCc-dDD') , 'aaaBbbCccDdd'
+  end
   def test_it_transforms
     browser = Rack::Test::Session.new(Rack::MockSession.new(Sinatra::Application))
     browser.get '/' , :transform=>'aaa-BBB-cCc-dDD'

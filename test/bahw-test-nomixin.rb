@@ -5,7 +5,9 @@ require 'test/unit'
 require 'rack/test'
 
 class BAHWTest < Test::Unit::TestCase
-
+  def test_it_underCamelizes_nomixin
+    assert_equal underCamelize('aaa-BBB-cCc-dDD') , 'aaaBbbCccDdd'
+  end
   def test_it_transforms_nomixin
     browser = Rack::Test::Session.new(Rack::MockSession.new(Sinatra::Application))
     browser.get '/' , :transform=>'aaa-BBB-cCc-dDD'
